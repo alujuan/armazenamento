@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Header from './src/components/Header';
-const list = [
+
+const foodList = [
   { name: 'Banana', calories: 96, protein: 1 },
   { name: 'Maça', calories: 53, protein: 0.3 },
   { name: 'Laranja', calories: 43, protein: 1 },
@@ -10,32 +11,35 @@ const list = [
   { name: 'Melancia', calories: 30, protein: 1 },
 ];
 
-const FoodItems = ({ name, calories, protein }) => (
-  <View>
-    <Text>{name}</Text>
-    <Text>{calories} cal</Text>
-    <Text>{protein} g</Text>
+const FoodItem = ({ name, calories, protein }) => (
+  <View style={styles.foodItem}>
+    <Text style={styles.foodName}>{name}</Text>
+    <Text style={styles.foodCalories}>{calories} cal</Text>
+    <Text style={styles.foodProtein}>{protein} g</Text>
   </View>
 );
 
-
 const FoodList = () => {
-  <FlatList
-    data={list}
-    renderItem={({ item }) => 
-    <FoodItems name={item.name} 
-      calories={item.calories} protein={item.protein} 
-    />} 
-  />
+  return (
+    <FlatList
+      data={foodList}
+      renderItem={({ item }) => (
+        <FoodItem
+          name={item.name}
+          calories={item.calories}
+          protein={item.protein}
+        />
+      )}
+      keyExtractor={(item, index) => index.toString()}
+    />
+  );
 }
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Header />
-      <View>
-        <FoodList />
-      </View>
+      <FoodList />
     </View>
   );
 }
@@ -46,5 +50,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  foodItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  foodName: {
+    fontSize: 16,
+  },
+  foodCalories: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  foodProtein: {
+    fontSize: 16,
+    color: 'gray',
   },
 });
